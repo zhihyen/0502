@@ -33,8 +33,8 @@ function draw() {
   videoGraphics.background(0); // 設定背景為黑色
   
   // 循環繪製圓形
-  for (let i = 0; i < videoWidth; i += 20) {
-    for (let j = 0; j < videoHeight; j += 20) {
+  for (let i = 0; i < videoGraphics.width; i += 20) {
+    for (let j = 0; j < videoGraphics.height; j += 20) {
       // 從攝影機畫面取得顏色
       let col = capture.get(i, j);
       videoGraphics.fill(col);
@@ -60,4 +60,3 @@ function windowResized() {
   capture.size(windowWidth * 0.8, windowHeight * 0.8);
   videoGraphics = createGraphics(capture.width, capture.height); // 重新調整圖形大小
 }
-
