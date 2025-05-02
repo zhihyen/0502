@@ -43,8 +43,8 @@ function draw() {
     }
   }
   
-  // 顯示 videoGraphics 圖形在視訊畫面上方
-  image(videoGraphics, x, y - videoHeight); // 顯示在視訊畫面上方
+  // 顯示 videoGraphics 圖形，覆蓋在攝影機畫面上
+  image(videoGraphics, x, y, videoWidth, videoHeight); // 覆蓋在攝影機畫面上
   
   // 翻轉影像並顯示攝影機畫面
   push();
