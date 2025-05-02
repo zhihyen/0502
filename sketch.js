@@ -4,7 +4,7 @@ let graphics;
 function setup() {
   // 建立全螢幕畫布
   createCanvas(windowWidth, windowHeight);
-  background('#b8bedd'); // 保留原本的背景顏色 #b8bedd
+  background('#faedcd'); // 設定背景顏色為 #faedcd
   
   // 初始化攝影機
   capture = createCapture(VIDEO);
@@ -17,7 +17,7 @@ function setup() {
 
 function draw() {
   // 設定背景顏色
-  background('#b8bedd'); // 保留原本的背景顏色 #b8bedd
+  background('#faedcd'); // 保留背景顏色為 #faedcd
   
   // 計算影像的顯示位置 (置中)
   let x = (width - capture.width) / 2;
