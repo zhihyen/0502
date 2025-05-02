@@ -21,25 +21,36 @@ function draw() {
   // 設定背景顏色
   background('#b8bedd'); // 更改背景顏色為 #b8bedd
   
+  // 確保 capture.width 和 capture.height 正確
+  let videoWidth = capture.width;
+  let videoHeight = capture.height;
+
   // 計算影像顯示位置 (置中)
-  let x = (width - capture.width) / 2;
-  let y = (height - capture.height) / 2;
+  let x = (width - videoWidth) / 2;
+  let y = (height - videoHeight) / 2;
   
-  // 在 videoGraphics 上繪製內容 (這裡可以自定義內容)
-  videoGraphics.background(255, 0, 0, 100); // 半透明紅色背景
-  videoGraphics.fill(255);
-  videoGraphics.textSize(32);
-  videoGraphics.textAlign(CENTER, CENTER);
-  videoGraphics.text('Video Overlay', videoGraphics.width / 2, videoGraphics.height / 2);
+  // 在 videoGraphics 上繪製內容
+  videoGraphics.background(0); // 設定背景為黑色
+  
+  // 循環繪製圓形
+  for (let i = 0; i < videoWidth; i += 20) {
+    for (let j = 0; j < videoHeight; j += 20) {
+      // 從攝影機畫面取得顏色
+      let col = capture.get(i, j);
+      videoGraphics.fill(col);
+      videoGraphics.noStroke();
+      videoGraphics.ellipse(i + 10, j + 10, 15, 15); // 繪製圓形，置中於單位格
+    }
+  }
   
   // 顯示 videoGraphics 圖形在視訊畫面上方
-  image(videoGraphics, x, y - capture.height); // 顯示在視訊畫面上方
+  image(videoGraphics, x, y - videoHeight); // 顯示在視訊畫面上方
   
   // 翻轉影像並顯示攝影機畫面
   push();
-  translate(x + capture.width, y); // 移動到影像的右上角
+  translate(x + videoWidth, y); // 移動到影像的右上角
   scale(-1, 1); // 水平翻轉影像
-  image(capture, 0, 0, capture.width, capture.height);
+  image(capture, 0, 0, videoWidth, videoHeight);
   pop();
 }
 
