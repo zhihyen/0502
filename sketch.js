@@ -4,7 +4,7 @@ let graphics;
 function setup() {
   // 建立全螢幕畫布
   createCanvas(windowWidth, windowHeight);
-  background('#b8bedd'); // 設定背景顏色為 #b8bedd
+  background('#b8bedd'); // 保留原本的背景顏色 #b8bedd
   
   // 初始化攝影機
   capture = createCapture(VIDEO);
@@ -17,23 +17,16 @@ function setup() {
 
 function draw() {
   // 設定背景顏色
-  background('#b8bedd'); // 設定背景顏色為 #b8bedd
+  background('#b8bedd'); // 保留原本的背景顏色 #b8bedd
   
-  // 確保攝影機的寬高正確
-  let videoWidth = capture.width;
-  let videoHeight = capture.height;
-
   // 計算影像的顯示位置 (置中)
-  let x = (width - videoWidth) / 2;
-  let y = (height - videoHeight) / 2;
+  let x = (width - capture.width) / 2;
+  let y = (height - capture.height) / 2;
   
   // 更新 graphics 的內容
-  graphics.push();
-  graphics.translate(graphics.width, 0); // 將原點移到右側
-  graphics.scale(-1, 1); // 水平翻轉
   graphics.background(0); // 設定背景為黑色
-  for (let i = 0; i < videoWidth; i += 20) {
-    for (let j = 0; j < videoHeight; j += 20) {
+  for (let i = 0; i < capture.width; i += 20) {
+    for (let j = 0; j < capture.height; j += 20) {
       // 從攝影機影像中取顏色
       let col = capture.get(i, j);
       graphics.fill(col);
@@ -41,16 +34,15 @@ function draw() {
       graphics.ellipse(i + 10, j + 10, 15, 15); // 繪製圓形
     }
   }
-  graphics.pop();
   
   // 顯示 graphics 圖形，覆蓋在攝影機畫面上
-  image(graphics, x, y, videoWidth, videoHeight);
+  image(graphics, x, y, capture.width, capture.height);
   
   // 翻轉影像並顯示攝影機畫面
   push();
-  translate(x + videoWidth, y); // 移動到影像的右上角
+  translate(x + capture.width, y); // 移動到影像的右上角
   scale(-1, 1); // 水平翻轉影像
-  image(capture, 0, 0, videoWidth, videoHeight);
+  image(capture, 0, 0, capture.width, capture.height);
   pop();
 }
 
